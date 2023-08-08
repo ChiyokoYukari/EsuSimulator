@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<!--
+  
+  本文件内容纯属恶搞乐子使用，请勿将其用于任何形式的网络暴力与威胁恐吓，以下代码仅为随机数生成器，无任何不良导向。
+  版权所有©Ceteaonia 2015-2023 EsuSimulator Ver3.3
+  遵守CC BY-NC-SA 4.0 国际许可协议
+-->
+<head>
+  <meta charset="UTF-8">
+  <title>全国QQ号绑定手机号/身份证号查询</title>
+
+  <style>
+    body {
+      font-family: "Matrix Code NFI", monospace;
+      background-color: #000;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0f0;
+      animation: blink 2s infinite;
+    }
+    h3, label {
+      color: #fff;
+    }
+
+    @keyframes blink {
+      0% {opacity: 1;}
+      50% {opacity: 0;}
+      100% {opacity: 1;}
+    }
+
+    form {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      background-color: #111;
+      color: #0f0;
+      caret-color: #0f0;
+      border: 2px solid #0f0;
+      outline: none;
+      width: 200px;
+      margin-top: 10px;
+    }
+
+    button[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: black;
+      color: #0f0;
+      border: 2px solid #0f0;
+      cursor: pointer;
+    }
+
+    #result {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #0f0;
+    }
+
+    .emoji {
+      font-size: 24px;
+      margin-right: 5px;
+    }
+
+    .matrix-code {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .matrix-code:before {
+      content: "";
+      position: absolute;
+      top: -500px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, #0f0,#000 50%, #0f0);
+      animation: matrix-fall 15s infinite linear;
+    }
+
+    @keyframes matrix-fall {
+      0% {top: -500px; opacity: 0;}
+      10% {opacity: 1;}
+      90% {opacity: 1;}
+      100% {top: 100%; opacity: 0;}
+    }
+
+    /* 自定义样式 */
+    .random-message {
+      text-align: center;
+      color: #f00;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="matrix-code"></div>
+  <h1>全国QQ号绑定手机号/身份证号查询</h1>
+  <center><h3>BY: Akato<h3></center>
+  
+  <form onsubmit="event.preventDefault(); queryPhoneNumberAndID()">
+    <label for="qqNumber">请输入QQ号：</label><br>
+    <input type="text" id="qqNumber" name="qqNumber" required><br><br>
+
+    <button type="submit" id="queryButton"><span class="emoji">&#128064;</span>查询<span class="emoji">&#129299;</span></button>
+  </form>
+
+  <div id="result"></div>
+
+  <!-- 随机切换的小几把话 -->
+  <div class="random-message">
+    <span id="message1" style="display: none;">恶俗永垂不朽</span>
+    <span id="message2" style="display: none;">别惹事，总有人盯着你</span>
+    <span id="message3" style="display: none;">开盒者必先自盒，你以为你用这个别人不知道吗？</span>
+  </div>
+
+  <script>
+   var resultDict = {}; // 临时缓存字典
+
+function queryPhoneNumberAndID() {
+  var qqNumber = document.getElementById("qqNumber").value;
+
+  if (!navigator.onLine) { // 检查设备是否连接互联网
+    displayResult("无法连接数据库");
+    return;
+  }
+
+  // 检查输入的QQ号是否符合要求
+  if (/^[1-9]\d{4,9}$/.test(qqNumber) || (qqNumber === '1145141919810' || qqNumber === '2313717239' || qqNumber === '2367923870' || qqNumber === '2704180369')) {
+    if (resultDict.hasOwnProperty(qqNumber)) {
+      // 如果已经查询过该QQ号，则直接从字典中获取结果
+      displayResult(resultDict[qqNumber]);
+    } else {
+      // 否则进行查询并将结果存储到字典中
+      var phoneNumber = generateRandomPhoneNumber();
+      var idNumber = generateRandomIDNumber();
+
+      // 根据特殊需求修改查询结果
+      if (qqNumber === '1145141919810') {
+        phoneNumber = '兄啊，这么恶臭的人有必要开🐴？';
+        idNumber = '哼哼，哼，啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊！';
+      } else if (qqNumber === '2313717239') {
+        phoneNumber = '世界最可爱的美少女的手机号';
+        idNumber = '世界最贤惠的美少女的身份证号';
+      } else if (qqNumber === '2367923870') {
+        phoneNumber = '我草天上那掉下来个什么东西哦原来是依托面包大抑郁';
+        idNumber = '操作员应在查找原因播放车载音乐学习初中英语';
+      } else if (qqNumber === '2704180369') {
+        phoneNumber = '关于门神为什么是神这件事，我希望让你知道门神相较于你群其他写手究竟神在了哪里';
+        idNumber = '首先是犯下傲慢之罪的....';
+      }
+
+      var result = "该QQ绑定手机号：" + phoneNumber + "<br>该QQ绑定身份证号：" + idNumber;
+      resultDict[qqNumber] = result; // 将结果存储到字典中
+      showLoadingMessage(); // 显示查询中的信息
+      setTimeout(function() {
+        displayResult(result); // 在1至3秒后显示查询结果
+      }, getRandomTime());
+    }
+  } else {
+    displayResult("您输入的QQ号有误");
+  }
+}
+
+    function generateRandomPhoneNumber() {
+      var phonePrefixes = [
+        '139', '132', '192', '185', '173', '177', '180', '181', '189', '199',
+        '138', '133', '153', '182', '170', '176', '185', '186', '188', '198',
+        '130', '131', '155', '156', '166'
+      ];
+      var phoneNumber = phonePrefixes[Math.floor(Math.random() * phonePrefixes.length)] + getRandomNumber(8);
+      return phoneNumber;
+    }
+
+    function getRandomNumber(length) {
+      var randomNumber = "";
+      for (var i = 0; i < length; i++) {
+        randomNumber += Math.floor(Math.random() * 10);
+      }
+      return randomNumber;
+    }
+
+    function generateRandomIDNumber() {
+      var idNumber = "";
+      var provinceCode = getRandomNumber(2);
+      var birthday = generateRandomBirthday();
+      var sequenceCode = getRandomNumber(3);
+      var checkCode = generateCheckCode(provinceCode + birthday + sequenceCode);
+
+      idNumber = provinceCode + birthday + sequenceCode + checkCode;
+      return idNumber;
+    }
+
+    function generateRandomBirthday() {
+      var year = Math.floor(Math.random() * (2023 - 1950 + 1)) + 1950;
+      var month = Math.floor(Math.random() * 12) + 1;
+      var day = Math.floor(Math.random() * 28) + 1;
+      if (day < 10) {
+        day = "0" + day;
+      }
+      return year.toString() + month.toString().padStart(2, '0') + day.toString().padStart(2, '0');
+    }
+
+    function generateCheckCode(idNumber) {
+      var weightFactors = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+      var checkCodes = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
+      var sum = 0;
+      for (var i = 0; i < idNumber.length; i++) {
+        sum += parseInt(idNumber[i]) * weightFactors[i];
+      }
+      var mod = sum % 11;
+      return checkCodes[mod];
+    }
+
+    function displayResult(result) {
+      var resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = result;
+    }
+
+    function showLoadingMessage() {
+      var resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "正在查询中...";
+    }
+
+    function getRandomTime() {
+      return Math.floor(Math.random() * 3000) + 1000; // 返回1至3秒的随机时间
+    }
+
+    // 随机切换
+    var messageElements = document.getElementsByClassName("random-message")[0].children;
+    var randomIndex = Math.floor(Math.random() * messageElements.length);
+    messageElements[randomIndex].style.display = "inline-block";
+  </script>
+</body>
+
+</html>
+
